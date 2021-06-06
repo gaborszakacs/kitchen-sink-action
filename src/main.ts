@@ -3,14 +3,17 @@ import {wait} from './wait'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+    const name: string = core.getInput('name')
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    core.debug('debug level log')
+    core.info('info level log')
+    core.warning('warning level log')
+    core.error('error level log')
 
-    core.setOutput('time', new Date().toTimeString())
+    core.setOutput('greeting', 'Hello ' + name)
+    core.exportVariable('exportVarKey', 'exportVarValue')
+    core.setSecret('secretToBeMasked')
+    core.addPath('/path/to/mytool');
   } catch (error) {
     core.setFailed(error.message)
   }
